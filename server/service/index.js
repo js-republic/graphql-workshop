@@ -71,7 +71,7 @@ module.exports = {
     return db
       .run(
         "INSERT INTO Comment (id, content, postId) VALUES (?, ?, ?)",
-        uuid(),
+        id,
         content,
         postId
       )
