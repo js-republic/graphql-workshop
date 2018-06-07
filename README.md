@@ -449,7 +449,7 @@ Ennoncé :
     export async function addNewPost(newPost) {
         await axios.post("/graphql", {
             query: `mutation createPost($newPost: PostInput!) {
-                createPost(newPost:PostInput) {
+                createPost(newPost: $newPost) {
                     id,
                     title,
                     content
