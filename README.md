@@ -96,7 +96,7 @@ Ennoncé :
 1.  Rendez-vous dans le ficher `server/route/graphql.js` pour y ajouter un type Query `posts` permettant de récupérer une liste de `Post`.
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     // ...
     const schema = buildSchema(`
@@ -115,7 +115,7 @@ Ennoncé :
 
 2.  Ajouter un resolver correspondant à la Query que venez d'ajouter. Vous pouvez vous appuyer sur la fonction `getPosts` du script `server/service/index.js` déjà importé dans `server/route/graphql.js`. Petite subtilité, cette fonction retourne une promesse. (plus d'information sur les resolvers asynchrones [ici](https://graphql.org/learn/execution/#asynchronous-resolvers))
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     // ...
     const schema = buildSchema(`
@@ -175,7 +175,7 @@ Ennoncé :
     Vous pouvez utiliser la librairie [axios](https://github.com/axios/axios) pour faire vos appels HTTP. Vérifier que vous avez bien implémeté la fonction en retournant sur le blog <http://localhost:3000> voir que la liste des articles se charge bien avec l'intérupteur en mode GraphQL, sinon regarder la console :)
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     export async function getPosts() {
         const {
@@ -207,7 +207,7 @@ Ennoncé :
 1.  Retournez dans `server/route/graphql.js` pour y ajouter un type `Comment` dans le schéma. Ce type `Comment` contiendra une propriété `id` que représente son identifiant unique et une propriété `content` qui représente le texte qu'elle contient. Ces deux proriétés doivent être obligatoires. Une fois ce type créé, ajouter une propriété `comments` dans `Post` qui contiendra la liste du type fraichement créé.
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     // ...
     const schema = buildSchema(`
@@ -233,7 +233,7 @@ Ennoncé :
 
 2.  Il ne reste plus qu'à modifier la requête de la fonction `getPosts` du fichier `src/client/Graphql.js` pour y ajouter le chargement des commentaires (et de toute le ses propriétés) en même temps que celui des Posts.
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
         export async function getPosts() {
             const { data: { data: { posts } } } = await axios.post("/graphql", {
@@ -261,7 +261,7 @@ Ennoncé :
 1.  Implémentons d'abord la partie serveur. Comme lors du premier exercice, rendez-vous dans `server/route/graphql.js`. Ajouter dans le schéma un nouveau type `Mutation` dans lequel il y aura une opération `createComment` prenant en paramètre un `postId`, de type `ID`, `content` de type string et retournant le type `Comment`.
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     const schema = buildSchema(`
     type Post {
@@ -287,7 +287,7 @@ Ennoncé :
 2.  Complétons notre implémentation serveur, en ajoutant le resolver correspondant à la mutation précédement ajoutée. Cette opération pourra s'appuyer sur la fonction `addNewCommentFor` du service `server/service/index.js`.
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     router.use(
         graphqlHTTP({
@@ -323,7 +323,7 @@ Ennoncé :
     ```
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     export async function addNewComment(comment, postId) {
         const {
@@ -358,7 +358,7 @@ Ennoncé :
 1.  Rendez-vous dans `server/route/graphql.js`. Ajouter une nouvelle `Mutation` dans laquel il y aura une opération `createPost` prennant en paramètre un `newPost` de type `PostInput`, input que vous aurez créé juste avant et qui contiendra le title et le content sous forme de text.
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     const schema = buildSchema(`
         type Post {
@@ -389,7 +389,7 @@ Ennoncé :
 2.  Comme pour l'ajout de commentaire, on ajout le resolver correspondant. Cette opération pourra s'appuyer sur la fonction `addNewPost` du service `server/service/index.js`.
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     router.use(
         graphqlHTTP({
@@ -421,7 +421,7 @@ Ennoncé :
     ```
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <img src="./docs/createPost-graphiql.png"/>
     </details>
 
@@ -432,7 +432,7 @@ Ennoncé :
     ```
 
     <details>
-    <summary style="color: #ccc;"><i>Découvrer la solution ici</i></summary>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     export async function addNewPost(newPost) {
         await axios.post("/graphql", {
