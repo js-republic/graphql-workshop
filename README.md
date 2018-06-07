@@ -132,9 +132,9 @@ Ennoncé :
         graphqlHTTP({
             schema,
             rootValue: {
-            posts() {
-                return service.getPosts();
-            }
+                posts() {
+                    return service.getPosts();
+                }
             },
             graphiql: true
         })
