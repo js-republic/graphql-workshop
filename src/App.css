@@ -1,0 +1,54 @@
+.post-creation-view-overlay {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.post-creation-view-body {
+  height: 75%;
+  width: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5%;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
+
+.p-1 {
+  padding: 8px;
+}
+
+.has-content-centered {
+  display: flex;
+  justify-content: center;
+}
+
+.feed {
+  width: 100%;
+}
+
+.comments-section {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.comments-section-form {
+  display: flex;
+  align-items: center;
+}
