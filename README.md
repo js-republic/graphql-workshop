@@ -11,7 +11,7 @@ Chaque partie débutera par une courte présentation faite par l'animateur du wo
 
 Chaque étape vous démontrera les avantages (et inconvénients) de GraphQL comparé à REST pour les mêmes besoins. Ce workshop est conçu pour des développeurs JavaScript, débutants en GraphQL.
 
-Pour commencer, assurez-vous d'avoir les pré-requis ci-dessous puis procéder à l'installation du projet de workshop. Une description du projet vous attends une fois l'installation terminée.
+Pour commencer, assurez-vous d'avoir les pré-requis ci-dessous puis procéder à l'installation du projet de workshop. Une description du projet vous attend une fois l'installation terminée.
 
 ## Pré-requis
 
@@ -355,7 +355,7 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
 
 Ennoncé :
 
-1.  Rendez-vous dans `server/route/graphql.js`. Ajouter une nouvelle `Mutation` dans laquel il y aura une opération `createPost` prennant en paramètre un `newPost` de type `PostInput`, input que vous aurez créé juste avant et qui contiendra le title et le content sous forme de text.
+1.  Rendez-vous dans `server/route/graphql.js`. Ajouter une nouvelle `Mutation` dans laquelle il y aura une opération `createPost` prennant en paramètre un `newPost` de type `PostInput`, input que vous aurez créé juste avant et qui contiendra le title et le content sous forme de text.
 
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
