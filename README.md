@@ -18,7 +18,7 @@ Pour commencer, assurez-vous d'avoir les pré-requis ci-dessous puis procéder �
 Pour suivre ce workshop, vous aurez besoin :
 
 * De connaissances confirmées dans le langage [JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript), en [NodeJS](https://nodejs.org/en/) et en développement Front-End.
-* D'une prémière expérience avec les [API REST](https://openclassrooms.com/courses/utilisez-des-api-rest-dans-vos-projets-web).
+* D'une première expérience avec les [API REST](https://openclassrooms.com/courses/utilisez-des-api-rest-dans-vos-projets-web).
 * De [NodeJS](https://nodejs.org/en/) installé en version **6.14.2 et plus**. Dans un soucis de compatibilité, l'implémentation back-end fonctionne avec la version 6.\* de Node, version la plus vielle actuellement encore maintenue. Si vous utilisez [nvm](https://github.com/creationix/nvm), vous pouvez faire un `nvm use` à la racine du projet pour passer directement dans la bonne version de NodeJS.
 * D'un éditeur de code. [Visual Studio Code](https://code.visualstudio.com/) fait désormais référence.
 
@@ -42,7 +42,7 @@ Votre navigateur s'ouvre à l'adresse <http://localhost:3000>, vous devriez déc
 
 ![alt Interface du blog](./docs/blog-screenshot.png)
 
-Prennez quelques instants pour vous familiariser avec le blog en l'état. Vous remarquerez notament que pour l'instant il communique avec le back-end via l'API REST.
+Prenez quelques instants pour vous familiariser avec le blog en l'état. Vous remarquerez notamment que, pour l'instant, il communique avec le back-end via l'API REST.
 
 ## Description du projet du workshop :
 
@@ -53,7 +53,7 @@ Le projet est organisé comme suit :
 ├── ...
 ├── blog.sqlite                   <-- Fichier de base de données SQlite du blog
 ├── migrations                    <-- Dossier contenant les scripts d'initialisation SQL
-├── public                        <-- Dossier publique exposé sur localhost:3000
+├── public                        <-- Dossier public exposé sur localhost:3000
 │   ├── index.html
 │   └── ...
 ├── server                        <-- Sources du serveur en NodeJS exposant les données
@@ -83,15 +83,15 @@ Si vous faites ce workshop hors de la session Best Of Web, nous vous invitons à
 
 > Les données sont enregistrées dans SQLite, sous la forme d'un fichier `blog.sqlite` à la racine du projet. Si vous souhaitez réinitialiser vos données, il vous suffit de supprimer ce fichier et redémarrer.
 
-## Excercices
+## Exercices
 
-### Familliarisation avec GraphQL
+### Familiarisation avec GraphQL
 
 Dans cette première partie, vous allez vous familiariser avec le requêtage GraphQL et l'implémentation côté serveur pour lire des données.
 
 Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop#/1>
 
-Ennoncé :
+Énoncé :
 
 1.  Rendez-vous dans le ficher `server/route/graphql.js` pour y ajouter un type Query `posts` permettant de récupérer une liste de `Post`.
 
@@ -164,15 +164,15 @@ Nos données désormais disponibles via GraphQL sur notre serveur, il est temps 
 
 Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop#/2>
 
-Ennoncé :
+Énoncé :
 
-1.  Aller dans le fichier `src/clients/graphql.js`. Ce fichier est responsable de toutes les requêtes GraphQL envoyées par le front vers le backend. Implémenter la fonction `getPosts` pour l'instant vide afin de charger l'`id`, le `title` et le `content` des articles :
+1.  Aller dans le fichier `src/clients/graphql.js`. Ce fichier est responsable de toutes les requêtes GraphQL envoyées par le front vers le backend. Implémenter la fonction `getPosts`, pour l'instant vide, afin de charger l'`id`, le `title` et le `content` des articles :
 
     ```javascript
     export async function getPosts() {}
     ```
 
-    Vous pouvez utiliser la librairie [axios](https://github.com/axios/axios) pour faire vos appels HTTP. Vérifier que vous avez bien implémeté la fonction en retournant sur le blog <http://localhost:3000> voir que la liste des articles se charge bien avec l'intérupteur en mode GraphQL, sinon regarder la console :)
+    Vous pouvez utiliser la librairie [axios](https://github.com/axios/axios) pour faire vos appels HTTP. Vérifiez que vous avez bien implémenté la fonction en retournant sur le blog <http://localhost:3000> voir que la liste des articles se charge bien avec l'interrupteur en mode GraphQL, sinon regardez la console :)
 
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
@@ -202,9 +202,9 @@ Vous ne l'aurez pas manqué, il n'y a plus les commentaires ! Et cela est normal
 
 Nous confirmons des points déjà vus juste avant dans cette partie.
 
-Ennoncé :
+Énoncé :
 
-1.  Retournez dans `server/route/graphql.js` pour y ajouter un type `Comment` dans le schéma. Ce type `Comment` contiendra une propriété `id` que représente son identifiant unique et une propriété `content` qui représente le texte qu'elle contient. Ces deux proriétés doivent être obligatoires. Une fois ce type créé, ajouter une propriété `comments` dans `Post` qui contiendra la liste du type fraichement créé.
+1.  Retournez dans `server/route/graphql.js` pour y ajouter un type `Comment` dans le schéma. Ce type `Comment` contiendra une propriété `id` qui représente son identifiant unique et une propriété `content` qui représente le texte qu'elle contient. Ces deux propriétés doivent être obligatoires. Une fois ce type créé, ajouter une propriété `comments` dans `Post` qui contiendra la liste du type fraichement créé.
 
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
@@ -229,9 +229,9 @@ Ennoncé :
     </pre>
     </details>
 
-    Vous pouvez vérifier dans GraphiQL que l'on peut bien désormais récupérer les commentaires avec les posts. Cela est possible notament car `service.getPosts()` retourne en vérité une liste d'objet Post comprenant les Comment qui vont avec.
+    Vous pouvez vérifier dans GraphiQL que l'on peut bien désormais récupérer les commentaires avec les posts. Cela est possible notamment car `service.getPosts()` retourne en vérité une liste d'objets Post comprenant les Comment qui vont avec.
 
-2.  Il ne reste plus qu'à modifier la requête de la fonction `getPosts` du fichier `src/client/Graphql.js` pour y ajouter le chargement des commentaires (et de toute le ses propriétés) en même temps que celui des Posts.
+2.  Il ne reste plus qu'à modifier la requête de la fonction `getPosts` du fichier `src/client/Graphql.js` pour y ajouter le chargement des commentaires (et de toute ses propriétés) en même temps que celui des Posts.
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
@@ -248,15 +248,15 @@ Comparez maintenant les appels réseaux du blog en mode REST et en mode GraphQL.
 
 > Nous venons de mettre le doigt sur une des grandes forces de GraphQL : **le requêtage multiple**
 
-Là où REST impose que chaque ressource doit être derrière une URL GraphQL permet de récupérer plusieurs entitées, liées ou non, en une seul requête.
+Là où REST impose que chaque ressource doit être derrière une URL, GraphQL permet de récupérer plusieurs entitées, liées ou non, en une seule requête.
 
 ### Création d'un commentaire via GraphQL
 
-Nous savons désormais exposer, et lire de la donnée au travers de GraphQL, voyons maintenant comment nous pouvons la modifier par se biais. Pour l'instant, quand vous êtes en mode GraphQL, l'ajout d'article ne fonctionne pas.
+Nous savons désormais exposer et lire de la donnée à travers GraphQL, voyons maintenant comment nous pouvons la modifier par ce biais. Pour l'instant, quand vous êtes en mode GraphQL, l'ajout d'article ne fonctionne pas.
 
 Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop#/3>
 
-Ennoncé :
+Énoncé :
 
 1.  Implémentons d'abord la partie serveur. Comme lors du premier exercice, rendez-vous dans `server/route/graphql.js`. Ajouter dans le schéma un nouveau type `Mutation` dans lequel il y aura une opération `createComment` prenant en paramètre un `postId`, de type `ID`, `content` de type string et retournant le type `Comment`.
 
@@ -365,9 +365,9 @@ Allons plus loin de la mutation avec la création d'un Post.
 
 Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop#/4>
 
-Ennoncé :
+Énoncé :
 
-1.  Rendez-vous dans `server/route/graphql.js`. Ajouter une nouvelle `Mutation` dans laquelle il y aura une opération `createPost` prennant en paramètre un `newPost` de type `PostInput`, input que vous aurez créé juste avant et qui contiendra le title et le content sous forme de text.
+1.  Rendez-vous dans `server/route/graphql.js`. Ajouter une nouvelle `Mutation` dans laquelle il y aura une opération `createPost` prenant en paramètre un `newPost` de type `PostInput`, input que vous aurez créé juste avant et qui contiendra le title et le content sous forme de text.
 
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
@@ -398,7 +398,7 @@ Ennoncé :
     </pre>
     </details>
 
-2.  Comme pour l'ajout de commentaire, on ajout le resolver correspondant. Cette opération pourra s'appuyer sur la fonction `addNewPost` du service `server/service/index.js`.
+2.  Comme pour l'ajout de commentaire, on ajoute le resolver correspondant. Cette opération pourra s'appuyer sur la fonction `addNewPost` du service `server/service/index.js`.
 
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
@@ -418,7 +418,7 @@ Ennoncé :
     </pre>
     </details>
 
-3.  Retourner dans GraphiQL, et formuler une requête graphql pour tester la mutation mise en place côté serveur. Vous devriez recevoir un résultat du type (en fonction des champs que choisissez de récupérer):
+3.  Retournez dans GraphiQL, et formulez une requête graphql pour tester la mutation mise en place côté serveur. Vous devriez recevoir un résultat du type (en fonction des champs que choisissez de récupérer):
 
     ```json
     {
