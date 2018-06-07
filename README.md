@@ -316,6 +316,18 @@ Ennoncé :
     }
     ```
 
+    <details>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
+    <pre>
+    mutation addNewComment {
+      createComment(
+        postId: "f1fbde00-696c-11e8-b3cf-bf211aef93e8",
+        content: "contentdzdzdz"
+      ) { id content }
+    }
+    </pre>
+    </summary>
+
 4.  La partie serveur maintenant prête, il est temps d'ajouter le code côté front capable d'envoyer une requête de mutation au serveur. Vous l'aurez surement deviné, rendons-nous dans le fichier `src/clients/graphql.js` pour implémenter la fonction `addNewComment` :
 
     ```javascript
