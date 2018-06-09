@@ -7,8 +7,8 @@ export async function getPosts(limit, offset) {
     }
   } = await axios.post("/graphql", {
     query: `
-      query getPosts($limit: Int, $offset: Int) {
-        posts(limit: $limit, offset: $offset) {
+      query getPosts {
+        posts {
           id,
           title
           content
@@ -18,11 +18,7 @@ export async function getPosts(limit, offset) {
           }
         }
       }
-    `,
-    variables: {
-      limit,
-      offset
-    }
+    `
   });
   return posts;
 }

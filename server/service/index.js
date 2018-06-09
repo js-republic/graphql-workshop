@@ -17,31 +17,11 @@ module.exports = {
       .then(() => db.migrate());
   },
   getPosts(nbPost = Infinity, offset = 0) {
-    const postQuery =
+    const query =
       nbPost !== Infinity
         ? `SELECT * from Post LIMIT ${nbPost} OFFSET ${offset}`
         : `SELECT * from Post`;
-    const query = `
-    SELECT Post.*, Comment.id as 'commentId', Comment.content as 'comment'
-    FROM (${postQuery}) as Post
-    LEFT JOIN Comment ON Comment.postId = Post.id`;
-    return db.all(query).then(all =>
-      values(
-        all.reduce((acc, curr) => {
-          if (acc[curr.id] && !!curr.commentId) {
-            acc[curr.id].comments.push(extractComment(curr));
-          } else {
-            acc[curr.id] = {
-              id: curr.id,
-              title: curr.title,
-              content: curr.content,
-              comments: curr.comment ? [extractComment(curr)] : []
-            };
-          }
-          return acc;
-        }, {})
-      )
-    );
+    return db.all(query);
   },
   addNewPost(newPost) {
     const id = uuid();
@@ -66,7 +46,6 @@ module.exports = {
     return db.all("SELECT * FROM Comment WHERE postId=?", postId);
   },
   addNewCommentFor(postId, content) {
-    console.log(`Adding :: ${postId} :: ${content}`);
     const id = uuid();
     return db
       .run(
