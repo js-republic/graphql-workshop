@@ -1,107 +1,62 @@
 const Router = require("express").Router;
 const graphqlHTTP = require("express-graphql");
-const {
-  buildSchema,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLID,
-  GraphQLInputObjectType
-} = require("graphql");
+const { makeExecutableSchema } = require("graphql-tools");
 const service = require("../service");
 
 const router = Router();
 
-const CommentType = new GraphQLObjectType({
-  name: "Comment",
-  fields: {
-    id: { type: GraphQLID },
-    content: { type: GraphQLString }
-  }
-});
+const typeDefs = `
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  comments: [Comment]!
+}
+input PostInput {
+  title: String!,
+  content: String!
+}
+type Comment {
+  id: ID!
+  content: String!
+}
+type Query {
+  posts: [Post]!
+  post(id: ID!): Post
+}
+type Mutation {
+  createComment(postId:ID!, content: String!): Comment
+  createPost(newPost: PostInput): Post
+}
+`;
 
-const PostType = new GraphQLObjectType({
-  name: "Post",
-  description: "This is my post type",
-  fields: {
-    id: { type: GraphQLID },
-    title: { type: GraphQLString },
-    content: { type: GraphQLString },
-    comments: {
-      type: new GraphQLList(CommentType),
-      resolve(post) {
-        return service.getCommentsFor(post.id);
-      }
-    }
-  }
-});
-
-const PostInput = new GraphQLInputObjectType({
-  name: "PostInput",
-  description: "The input given in args",
-  fields: {
-    title: { type: GraphQLString },
-    content: { type: GraphQLString }
-  }
-});
-
-const RootQuery = new GraphQLObjectType({
-  name: "RootQueryType",
-  fields: {
-    posts: {
-      type: new GraphQLList(PostType),
-      args: {},
-      resolve(parentValue, args) {
-        return service.getPosts();
-      }
+const resolvers = {
+  Query: {
+    posts() {
+      return service.getPosts();
     },
-    post: {
-      type: PostType,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, args) {
-        return service.getPostById(args.id);
-      }
+    post(parentValue, args) {
+      return service.getPostById(args.id);
     }
-  }
-});
-
-const RootMutation = new GraphQLObjectType({
-  name: "RootMutationType",
-  fields: {
-    createComment: {
-      type: CommentType,
-      args: {
-        postId: { type: GraphQLID },
-        content: { type: GraphQLString }
-      },
-      resolve(parentValue, args) {
-        return service.addNewCommentFor(args.postId, args.content);
-      }
+  },
+  Mutation: {
+    createComment(parentValue, args) {
+      return service.addNewCommentFor(args.postId, args.content);
     },
-    createPost: {
-      type: PostType,
-      args: {
-        newPost: { type: PostInput }
-      },
-      resolve(parentValue, args) {
-        return service.addNewPost(args.newPost);
-      }
+    createPost(parentValue, args) {
+      return service.addNewPost(args.newPost);
+    }
+  },
+  Post: {
+    comments(post) {
+      return service.getCommentsFor(post.id);
     }
   }
-});
-
-const schema2 = new GraphQLSchema({
-  query: RootQuery,
-  mutation: RootMutation,
-  types: [PostType, CommentType, PostInput]
-});
+};
 
 router.use(
   graphqlHTTP({
-    schema: schema2,
+    schema: makeExecutableSchema({ typeDefs, resolvers }),
     graphiql: true
   })
 );
