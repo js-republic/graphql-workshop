@@ -7,7 +7,7 @@ const restRouter = require("./route/rest");
 const graphQlRouter = require("./route/graphql");
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = 3001;
 const expressLogger = loggerConf.expressLogger;
 const logger = loggerConf.logger;
 

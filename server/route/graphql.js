@@ -1,22 +1,23 @@
 const Router = require("express").Router;
 const graphqlHTTP = require("express-graphql");
-const buildSchema = require("graphql").buildSchema;
+const { makeExecutableSchema } = require("graphql-tools");
 const service = require("../service");
 
 const router = Router();
 
-const schema = buildSchema(`
-  type Post {
-    id: ID!
-    title: String!
-    content: String!
-  }
-`);
+const typeDefs = `
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+}
+`;
+
+const resolvers = {};
 
 router.use(
   graphqlHTTP({
-    schema,
-    rootValue: {},
+    schema: makeExecutableSchema({ typeDefs, resolvers }),
     graphiql: true
   })
 );

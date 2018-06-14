@@ -17,10 +17,10 @@ Pour commencer, assurez-vous d'avoir les pré-requis ci-dessous puis procéder �
 
 Pour suivre ce workshop, vous aurez besoin :
 
-* De connaissances confirmées dans le langage [JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript), en [NodeJS](https://nodejs.org/en/) et en développement Front-End.
-* D'une première expérience avec les [API REST](https://openclassrooms.com/courses/utilisez-des-api-rest-dans-vos-projets-web).
-* De [NodeJS](https://nodejs.org/en/) installé en version **6.14.2 et plus**. Dans un soucis de compatibilité, l'implémentation back-end fonctionne avec la version 6.\* de Node, version la plus vielle actuellement encore maintenue. Si vous utilisez [nvm](https://github.com/creationix/nvm), vous pouvez faire un `nvm use` à la racine du projet pour passer directement dans la bonne version de NodeJS.
-* D'un éditeur de code. [Visual Studio Code](https://code.visualstudio.com/) fait désormais référence.
+- De connaissances confirmées dans le langage [JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript), en [NodeJS](https://nodejs.org/en/) et en développement Front-End.
+- D'une prémière expérience avec les [API REST](https://openclassrooms.com/courses/utilisez-des-api-rest-dans-vos-projets-web).
+- De [NodeJS](https://nodejs.org/en/) installé en version **6.14.2 et plus**. Dans un soucis de compatibilité, l'implémentation back-end fonctionne avec la version 6.\* de Node, version la plus vielle actuellement encore maintenue. Si vous utilisez [nvm](https://github.com/creationix/nvm), vous pouvez faire un `nvm use` à la racine du projet pour passer directement dans la bonne version de NodeJS.
+- D'un éditeur de code. [Visual Studio Code](https://code.visualstudio.com/) fait désormais référence.
 
 ## Installation
 
@@ -75,8 +75,8 @@ Le projet est organisé comme suit :
 
 Quand le projet est démarré (via `npm start`) deux tâches sont lancées en parallèle :
 
-* Un webpack-dev-server avec hot reload qui compile les sources du front en React (dans le dossier `/src`) et les expose sur l'adresse <http://localhost:3000>. Ce webpack-dev-server fait aussi proxy pour envoyer les requêtes XHR vers le serveur.
-* Un serveur NodeJS qui expose une api REST sur <http://localhost:3001/rest> et une api GraphQL sur <http://localhost:3001/graphql>
+- Un webpack-dev-server avec hot reload qui compile les sources du front en React (dans le dossier `/src`) et les expose sur l'adresse <http://localhost:3000>. Ce webpack-dev-server fait aussi proxy pour envoyer les requêtes XHR vers le serveur.
+- Un serveur NodeJS qui expose une api REST sur <http://localhost:3001/rest> et une api GraphQL sur <http://localhost:3001/graphql>
 
 Si vous faites ce workshop hors de la session Best Of Web, nous vous invitons à d'abord prendre connaissance du début de cette présentation jusqu'à la diapositive _Premier exercice_ :
 <https://slides.com/mbreton/graphql-workshop>
@@ -99,7 +99,7 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     // ...
-    const schema = buildSchema(`
+    const typeDefs = `
     type Post {
       id: ID!
       title: String!
@@ -118,7 +118,7 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     // ...
-    const schema = buildSchema(`
+    const typeDefs = `
     type Post {
       id: ID!
       title: String!
@@ -210,7 +210,7 @@ Nous confirmons des points déjà vus juste avant dans cette partie.
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
     // ...
-    const schema = buildSchema(`
+    const typeDefs = `
     type Post {
       id: ID!
       title: String!
@@ -229,9 +229,42 @@ Nous confirmons des points déjà vus juste avant dans cette partie.
     </pre>
     </details>
 
-    Vous pouvez vérifier dans GraphiQL que l'on peut bien désormais récupérer les commentaires avec les posts. Cela est possible notamment car `service.getPosts()` retourne en vérité une liste d'objets Post comprenant les Comment qui vont avec.
+2.  Dans le même fichier, ajouter un resolver pour la propriété `comments` du type `Post`. Se revolver devra charger les commentaires à l'aide de la fonction `getCommentFor` du service en lui passant en paramètre l'id du post parent.
 
-2.  Il ne reste plus qu'à modifier la requête de la fonction `getPosts` du fichier `src/client/Graphql.js` pour y ajouter le chargement des commentaires (et de toute ses propriétés) en même temps que celui des Posts.
+    <details>
+    <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
+    <pre>
+        const typeDefs = `
+            type Post {
+                id: ID!
+                title: String!
+                content: String!
+                comments: [Comment]!
+            }
+            type Comment {
+                id: ID!
+                content: String!
+            }
+            type Query {
+                posts: [Post]!
+            }
+            `;
+            const resolvers = {
+                Query: {
+                    posts() {
+                    return service.getPosts();
+                    }
+                },
+                Post: {
+                    comments(post) {
+                    return service.getCommentsFor(post.id);
+                    }
+                }
+            };
+    </pre>
+    </details>
+
+3.  Il ne reste plus qu'à modifier la requête de la fonction `getPosts` du fichier `src/client/Graphql.js` pour y ajouter le chargement des commentaires (et de toute le ses propriétés) en même temps que celui des Posts.
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
@@ -263,7 +296,7 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
-    const schema = buildSchema(`
+    const typeDefs = `
     type Post {
         id: ID!
         title: String!
@@ -289,17 +322,23 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
-    router.use(
-        graphqlHTTP({
-            schema,
-            rootValue: {
-                posts: () => service.getPosts(),
-                createComment: params =>
-        service.addNewCommentFor(params.postId, params.content)
-            },
-            graphiql: true
-        })
-    );
+    const resolvers = {
+        Query: {
+            posts() {
+                return service.getPosts();
+            }
+        },
+        Mutation: {
+            createComment(parentValue, args) {
+                return service.addNewCommentFor(args.postId, args.content);
+            }
+        },
+        Post: {
+            comments(post) {
+                return service.getCommentsFor(post.id);
+            }
+        }
+    };
     </pre>
     </details>
 
@@ -372,7 +411,7 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
-    const schema = buildSchema(`
+    const typeDefs = `
         type Post {
             id: ID!
             title: String!
@@ -403,18 +442,26 @@ Présentation des points abordés : <https://slides.com/mbreton/graphql-workshop
     <details>
     <summary style="color: #ccc;"><i>Découvrir la solution ici</i></summary>
     <pre>
-    router.use(
-        graphqlHTTP({
-            schema,
-            rootValue: {
-            posts: () => service.getPosts(),
-            createPost: ({ newPost }) => service.addNewPost(newPost),
-            createComment: params =>
-                service.addNewCommentFor(params.postId, params.content)
+    const resolvers = {
+        Query: {
+            posts() {
+                return service.getPosts();
+            }
+        },
+        Mutation: {
+            createComment(parentValue, args) {
+                return service.addNewCommentFor(args.postId, args.content);
             },
-            graphiql: true
-        })
-        );
+            createPost(parentValue, args) {
+                return service.addNewPost(args.newPost);
+            }
+        },
+        Post: {
+            comments(post) {
+                return service.getCommentsFor(post.id);
+            }
+        }
+    };
     </pre>
     </details>
 
