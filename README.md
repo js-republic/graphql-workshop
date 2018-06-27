@@ -1,10 +1,8 @@
 # GraphQL Workshop for Best Of Web
 
-![alt Logo Best of Web](./docs/bow-logo.png)
+Ce workshop préparé au sein de [JS-Republic](http://js-republic.com/) par [Michael Romain](http://twitter.com/michaeldotjs) et [Mathieu Breton](https://twitter.com/matbreton) a pour but de vous apprendre à utiliser [GraphQL](https://graphql.org/).
 
 ## Introduction
-
-Ce workshop préparé au sein de [JS-Republic](http://js-republic.com/) par [Michael Romain](http://twitter.com/michaeldotjs) et [Mathieu Breton](https://twitter.com/matbreton) a pour but de vous apprendre à utiliser [GraphQL](https://graphql.org/).
 
 D'une durée approximative de 3h, ce workshop vous guidera étape par étape dans la migration d'un blog basique fait avec une API REST vers une implémentation full GraphQL.
 Chaque partie débutera par une courte présentation faite par l'animateur du workshop afin d'expliquer les points qui seront traités dans celle-ci, puis les candidats suivront l'énoncé pour accomplir la partie en question. Une fois l'étape terminée, l'animateur répondra aux questions et passera à la partie suivante.
